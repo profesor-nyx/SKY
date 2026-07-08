@@ -4,6 +4,48 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ---------- Sunucu sayacı (simüle edilmiş, yavaşça büyüyen) ----------
+     Gerçek bir API'ye bağlı değil — bot token'ını buraya yazmak güvenlik
+     riski taşıdığı için (bkz. önceki not) sayaç, tarihe göre deterministik
+     şekilde her gün biraz artan bir sayı üretiyor. Yani bugün siteyi kim
+     açarsa hep aynı sayıyı görür, ama yarın sayı biraz daha yüksek olur.
+     1000-5000 aralığında kalır. İstersen aşağıdaki START_DATE / START_VALUE
+     / MAX_VALUE değerlerini değiştirerek hızını ayarlayabilirsin. */
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function simulatedServerCount() {
+    const START_DATE = new Date('2026-01-01T00:00:00Z');
+    const START_VALUE = 1200;
+    const MAX_VALUE = 4950;
+    const now = new Date();
+    const days = Math.max(0, Math.floor((now - START_DATE) / 86400000));
+    let count = START_VALUE;
+    for (let i = 0; i <= days; i++) {
+      const rnd = mulberry32(i + 1)();
+      count += Math.floor(rnd * 12) + 3; // her gün +3 ile +14 arası büyür
+      if (count >= MAX_VALUE) { count = MAX_VALUE; break; }
+    }
+    return count;
+  }
+
+  function loadStats() {
+    const sunucu = simulatedServerCount();
+    const kullanici = Math.round(sunucu * 63 + sunucu * 0.4 * Math.random());
+    const uptime = 99;
+    const nums = document.querySelectorAll('.stat-num');
+    if (nums[0]) nums[0].dataset.count = sunucu;
+    if (nums[1]) nums[1].dataset.count = kullanici;
+    if (nums[2]) nums[2].dataset.count = uptime;
+  }
+  loadStats();
+
   /* ---------- mobile nav toggle ---------- */
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('nav-toggle');
