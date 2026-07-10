@@ -3,215 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SKY — Destek Merkezi</title>
-<meta name="description" content="SKY Discord botu için resmi destek merkezi. Komutlar, özellikler ve sık sorulan sorular.">
-
+<title>Sky — Discord Botu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="sky-canvas"></canvas>
-
-<!-- ================= NAV ================= -->
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#top" class="brand">
-      <span class="brand-mark">
-        <img src="logo.png" alt="SKY logosu" width="30" height="30">
-      </span>
-      <span class="brand-name">SKY</span>
-    </a>
-
-    <nav class="nav-links" id="nav-links">
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#komutlar">Komutlar</a>
-      <a href="#sss">SSS</a>
-      <a href="#destek">Destek</a>
-    </nav>
-
-    <div class="nav-cta">
-      <span class="status-pill"><i class="dot"></i>Sistem Çevrimiçi</span>
-      <a href="#" class="btn btn-primary btn-sm">Sunucuna Ekle</a>
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 15a5 5 0 0 1 4.5-5 6 6 0 0 1 11 3 4.5 4.5 0 0 1-1 8.9H7A4.5 4.5 0 0 1 4 15Z" stroke="#eaf2ff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+      Sky
     </div>
-
-    <button class="nav-toggle" id="nav-toggle" aria-label="Menüyü aç">
-      <span></span><span></span><span></span>
+    <ul id="navLinks">
+      <li><a href="#ozellikler">Özellikler</a></li>
+      <li><a href="#komutlar">Komutlar</a></li>
+      <li><a href="#topluluk">Topluluk</a></li>
+    </ul>
+    <button id="menuBtn" class="menu-btn" aria-label="menü">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#eaf2ff" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-  </div>
+    <a href="#" class="btn btn-primary">Discord'a Ekle</a>
+  </nav>
 </header>
+<div class="horizon"></div>
 
-<!-- ================= HERO ================= -->
-<section class="hero" id="top">
-  <img class="hero-banner" src="banner-skyverse.png" alt="" aria-hidden="true">
-  <div class="hero-overlay" aria-hidden="true"></div>
-
-  <div class="hero-grid">
-    <div class="hero-content">
-      <img class="hero-logo" src="logo.png" alt="SKY">
-      <p class="eyebrow">Discord Botu</p>
-      <h1>Sunucun için<br>tasarlanmış bot:<br><span class="accent-text">SKY</span></h1>
-      <p class="hero-sub">Moderasyondan müziğe, eğlenceden otomasyona kadar sunucunun ihtiyaç duyduğu her şey. Kurulum, komutlar ve destek — hepsi bu sayfada.</p>
-
-      <div class="hero-actions">
-        <a href="#" class="btn btn-primary">Botu Sunucuna Ekle</a>
-        <a href="#" class="btn btn-ghost">Destek Sunucusuna Katıl</a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> 12.000+ sunucuda aktif</div>
+      <h1>Sunucun için <span class="accent">gökyüzü kadar</span> sakin, o kadar da güçlü bir bot.</h1>
+      <p class="lead">Sky; moderasyon, müzik ve topluluk yönetimini tek çatı altında toplar. Kurulumu iki dakika, öğrenmesi sıfır efor.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#05111f" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Sky'ı Sunucuna Ekle
+        </a>
+        <a href="#komutlar" class="btn btn-ghost">Komutları Gör</a>
       </div>
-
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" data-count="0">0</span><span class="stat-label">Sunucu</span></div>
-        <div class="stat"><span class="stat-num" data-count="0">0</span><span class="stat-label">Kullanıcı</span></div>
-        <div class="stat"><span class="stat-num" data-count="0">0</span><span class="stat-label">% Çalışma Süresi</span></div>
+        <div class="stat"><b id="statServer">0</b><span>Aktif sunucu</span></div>
+        <div class="stat"><b id="statUser">0</b><span>Kullanıcı</span></div>
+        <div class="stat"><b>%99.9</b><span>Çalışma süresi</span></div>
+      </div>
+    </div>
+
+    <div class="embed-mock">
+      <div class="embed-top">
+        <div class="embed-avatar">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 15a5 5 0 0 1 4.5-5 6 6 0 0 1 11 3 4.5 4.5 0 0 1-1 8.9H7A4.5 4.5 0 0 1 4 15Z" stroke="#eaf2ff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="embed-name">Sky <small>BOT · <span id="clock">--:--</span></small></div>
+      </div>
+      <div class="embed-body">
+        <div class="embed-title">Sunucu Durumu</div>
+        <div class="embed-desc">Her şey yolunda. Moderasyon kayıtları ve otomatik denetim aktif.</div>
+        <div class="embed-fields">
+          <div class="embed-field"><span>Üye</span><b>4.812</b></div>
+          <div class="embed-field"><span>Aktif Kanal</span><b>26</b></div>
+          <div class="embed-field"><span>Uyarı (24s)</span><b>3</b></div>
+          <div class="embed-field"><span>Gecikme</span><b>41 ms</b></div>
+        </div>
+        <div class="embed-cmdline mono">/sky durum</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= FEATURES ================= -->
-<section class="section" id="ozellikler">
-  <div class="section-inner">
-    <p class="section-eyebrow">Özellikler</p>
-    <h2 class="section-title">Tek botta ihtiyacın olan her şey</h2>
-    <p class="section-sub">SKY, sunucunda ihtiyaç duyduğun sistemleri tek panelde birleştirir.</p>
-
-    <div class="feature-grid">
-      <article class="feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h3>Moderasyon</h3>
-        <p>Otomatik küfür/spam filtresi, uyarı sistemi, geçici susturma ve yetkilendirilebilir log kanalları.</p>
-      </article>
-      <article class="feature-card">
-        <div class="feature-icon">🎧</div>
-        <h3>Müzik</h3>
-        <p>YouTube ve Spotify bağlantılarından yüksek kaliteli, kesintisiz sesli kanal yayını.</p>
-      </article>
-      <article class="feature-card">
-        <div class="feature-icon">🎮</div>
-        <h3>Eğlence</h3>
-        <p>Mini oyunlar, seviye/XP sistemi, ekonomi komutları ve günlük ödüller.</p>
-      </article>
-      <article class="feature-card">
-        <div class="feature-icon">⚙️</div>
-        <h3>Otomasyon</h3>
-        <p>Karşılama mesajları, otomatik rol atama ve zamanlanmış duyurular.</p>
-      </article>
-      <article class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>İstatistik</h3>
-        <p>Sunucu aktivitesi, üye grafikleri ve komut kullanım raporları.</p>
-      </article>
-      <article class="feature-card">
-        <div class="feature-icon">🔔</div>
-        <h3>Bildirimler</h3>
-        <p>YouTube, Twitch ve X (Twitter) canlı yayın/gönderi bildirimleri.</p>
-      </article>
+<section id="ozellikler">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Neden Sky</div>
+      <h2>Tek bot, dört görev.</h2>
+      <p>Ayrı ayrı bot eklemekle uğraşma. Sky, sunucunun ihtiyaç duyduğu temel araçları tek pakette sunar.</p>
     </div>
-  </div>
-</section>
-
-<!-- ================= COMMANDS ================= -->
-<section class="section section-alt" id="komutlar">
-  <div class="section-inner">
-    <p class="section-eyebrow">Komutlar</p>
-    <h2 class="section-title">Komut listesi</h2>
-    <p class="section-sub">Tüm komutlar sunucuda <code>/</code> ile başlar. Aşağıdan arayabilirsin.</p>
-
-    <div class="cmd-search-wrap">
-      <input type="text" id="cmd-search" placeholder="Komut ara… örn. ping, kick, müzik" autocomplete="off">
-    </div>
-
-    <div class="cmd-filters" id="cmd-filters">
-      <button class="chip active" data-filter="hepsi">Hepsi</button>
-      <button class="chip" data-filter="genel">Genel</button>
-      <button class="chip" data-filter="moderasyon">Moderasyon</button>
-      <button class="chip" data-filter="muzik">Müzik</button>
-      <button class="chip" data-filter="eglence">Eğlence</button>
-    </div>
-
-    <div class="cmd-table" id="cmd-table">
-      <!-- rows injected by script.js -->
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="section" id="sss">
-  <div class="section-inner">
-    <p class="section-eyebrow">SSS</p>
-    <h2 class="section-title">Sık sorulan sorular</h2>
-
-    <div class="faq-list" id="faq-list">
-      <div class="faq-item">
-        <button class="faq-q">
-          SKY botunu sunucuma nasıl eklerim?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Sağ üstteki "Sunucuna Ekle" butonuna basıp yetkilendirme ekranından sunucunu seçmen yeterli. Bot eklenme yetkisine sahip bir yönetici hesabıyla giriş yapmalısın.</p></div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/></svg></div>
+        <h3>Akıllı Moderasyon</h3>
+        <p>Spam, küfür ve raid girişimlerini otomatik yakalar; kararları sana bırakır, işi kendisi yapar.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Komutlar neden görünmüyor?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Discord'un eğik çizgi (/) komutlarının senkronize olması birkaç dakika sürebilir. Sorun devam ederse sunucudan botu çıkarıp tekrar eklemeyi dene.</p></div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></div>
+        <h3>Kesintisiz Müzik</h3>
+        <p>Yüksek ses kalitesiyle sıra yönetimi, filtreler ve gecikmesiz çalma deneyimi.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Müzik komutları çalışmıyor, neden?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Botun sesli kanala bağlanabilmesi için "Kanala Bağlan" ve "Konuş" izinlerine ihtiyacı var. Rol izinlerini kontrol et.</p></div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87M9 20H4v-2a4 4 0 0 1 3-3.87m5-4.13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6 0a4 4 0 1 0 0-8"/></svg></div>
+        <h3>Karşılama & Roller</h3>
+        <p>Yeni üyeleri özel mesajlarla karşıla, kendinden rol menüleriyle onları yönlendir.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Bir hata bildirmek istiyorum, nereden ulaşabilirim?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Aşağıdaki "Destek Sunucusuna Katıl" butonundan resmi Discord sunucumuza katılıp #hata-bildirimi kanalını kullanabilirsin.</p></div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 15l4-6 4 4 5-8"/></svg></div>
+        <h3>Detaylı İstatistik</h3>
+        <p>Üye artışı, mesaj trafiği ve kanal aktivitesini canlı panelde takip et.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          SKY ücretsiz mi?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Evet, temel özelliklerin tamamı ücretsizdir. İleride isteğe bağlı ek özellikler sunulabilir.</p></div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.9 4.9l2.8 2.8m8.6 8.6 2.8 2.8M2 12h4m12 0h4M4.9 19.1l2.8-2.8m8.6-8.6 2.8-2.8"/></svg></div>
+        <h3>7/24 Kararlılık</h3>
+        <p>Dağıtılmış altyapı sayesinde bakım kesintisi neredeyse hiç görülmez.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3V4Z"/></svg></div>
+        <h3>Özel Komutlar</h3>
+        <p>Sunucuna özgü kısayol komutları ve otomatik yanıtlar oluştur.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= SUPPORT / CTA ================= -->
-<section class="section support" id="destek">
-  <img class="support-banner" src="banner-neon.png" alt="" aria-hidden="true">
-  <div class="support-overlay" aria-hidden="true"></div>
-  <div class="section-inner support-inner">
-    <p class="section-eyebrow">Destek</p>
-    <h2 class="section-title">Yardıma mı ihtiyacın var?</h2>
-    <p class="section-sub">Destek ekibimiz ve topluluk her zaman resmi Discord sunucumuzda.</p>
-    <div class="hero-actions center">
-      <a href="#" class="btn btn-primary">Destek Sunucusuna Katıl</a>
-      <a href="#" class="btn btn-ghost">Botu Sunucuna Ekle</a>
+<section id="komutlar">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Komut Merkezi</div>
+      <h2>En çok kullanılan komutlar.</h2>
+      <p>Tüm komut listesinin küçük bir bölümü — geri kalanı sunucunda <span class="mono">/yardım</span> ile.</p>
+    </div>
+    <div class="commands-panel">
+      <div class="cmd-tabs" id="cmdTabs">
+        <div class="cmd-tab active" data-cat="moderasyon">Moderasyon</div>
+        <div class="cmd-tab" data-cat="muzik">Müzik</div>
+        <div class="cmd-tab" data-cat="topluluk">Topluluk</div>
+        <div class="cmd-tab" data-cat="ayarlar">Ayarlar</div>
+      </div>
+      <div class="cmd-list" id="cmdList">
+        <div class="cmd-row" data-cat="moderasyon">
+          <div class="cmd-name mono">/sky uyar</div>
+          <div class="cmd-desc">Bir üyeye kayıtlı uyarı verir ve moderasyon geçmişine ekler.</div>
+        </div>
+        <div class="cmd-row" data-cat="moderasyon">
+          <div class="cmd-name mono">/sky sustur</div>
+          <div class="cmd-desc">Belirlenen süre boyunca üyenin mesaj gönderimini kısıtlar.</div>
+        </div>
+        <div class="cmd-row" data-cat="moderasyon">
+          <div class="cmd-name mono">/sky temizle</div>
+          <div class="cmd-desc">Seçilen kanaldaki son mesajları toplu olarak siler.</div>
+        </div>
+        <div class="cmd-row" data-cat="muzik">
+          <div class="cmd-name mono">/sky çal</div>
+          <div class="cmd-desc">Verilen şarkıyı sıraya ekler ve çalmaya başlar.</div>
+        </div>
+        <div class="cmd-row" data-cat="muzik">
+          <div class="cmd-name mono">/sky sıra</div>
+          <div class="cmd-desc">Çalma sırasındaki şarkıları listeler.</div>
+        </div>
+        <div class="cmd-row" data-cat="topluluk">
+          <div class="cmd-name mono">/sky karşıla</div>
+          <div class="cmd-desc">Yeni üyeler için karşılama mesajını ayarlar.</div>
+        </div>
+        <div class="cmd-row" data-cat="topluluk">
+          <div class="cmd-name mono">/sky rol-menü</div>
+          <div class="cmd-desc">Kendinden rol seçim menüsü oluşturur.</div>
+        </div>
+        <div class="cmd-row" data-cat="ayarlar">
+          <div class="cmd-name mono">/sky durum</div>
+          <div class="cmd-desc">Sunucunun anlık üye, aktivite ve gecikme bilgisini gösterir.</div>
+        </div>
+        <div class="cmd-row" data-cat="ayarlar">
+          <div class="cmd-name mono">/sky prefix</div>
+          <div class="cmd-desc">Metin komutları için kullanılan ön eki değiştirir.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-name">SKY</span>
-      <p>Sunucun için tasarlanmış Discord botu.</p>
+<div class="wrap">
+  <div class="trust-strip">
+    <div><strong>2.100.000+</strong> kullanıcı Sky ile aynı sunucuda</div>
+    <div><strong>%99.9</strong> ortalama çalışma süresi</div>
+    <div><strong>4 dk</strong> ortalama kurulum süresi</div>
+  </div>
+</div>
+
+<section class="cta-section" id="topluluk">
+  <div class="wrap">
+    <h2>Sunucun, birkaç tıkla daha düzenli.</h2>
+    <p>Sky'ı sunucuna ekle, komutları keşfet, ilk beş dakikada farkı gör.</p>
+    <a href="#" class="btn btn-primary">Ücretsiz Ekle</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 15a5 5 0 0 1 4.5-5 6 6 0 0 1 11 3 4.5 4.5 0 0 1-1 8.9H7A4.5 4.5 0 0 1 4 15Z" stroke="#eaf2ff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        Sky
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Ürün</h4>
+          <a href="#ozellikler">Özellikler</a>
+          <a href="#komutlar">Komutlar</a>
+          <a href="#">Sürüm Notları</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kaynaklar</h4>
+          <a href="#">Dokümantasyon</a>
+          <a href="#">Durum Sayfası</a>
+          <a href="#">Destek Sunucusu</a>
+        </div>
+        <div class="footer-col">
+          <h4>Yasal</h4>
+          <a href="#">Gizlilik</a>
+          <a href="#">Kullanım Şartları</a>
+        </div>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#komutlar">Komutlar</a>
-      <a href="#sss">SSS</a>
-      <a href="#destek">Destek</a>
+    <div class="horizon" style="margin-bottom:24px;"></div>
+    <div class="footer-bottom">
+      <span>© 2026 Sky Bot. Tüm hakları saklıdır.</span>
+      <span>Discord tarafından resmi olarak onaylanmamıştır.</span>
     </div>
-    <p class="footer-copy">© 2026 SKY. Tüm hakları saklıdır.</p>
   </div>
 </footer>
 
